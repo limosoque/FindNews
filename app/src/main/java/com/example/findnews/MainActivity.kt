@@ -3,15 +3,15 @@ package com.example.findnews
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle;
+import android.os.Bundle
 import android.util.Log
-import android.view.View;
-import android.widget.EditText;
+import android.view.View
+import android.widget.EditText
 import android.widget.Toast
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.findnews.api.NewsApiJSON
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-import java.util.ArrayList;
+import java.util.ArrayList
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -64,9 +64,7 @@ class MainActivity : AppCompatActivity() {
 
             // Создаем экземпляр интерфейса API
             newsApiService = Retrofit.Builder()
-                //.baseUrl("@string/news_source")
-                //TODO: hardcode, ибо иначе не работает
-                .baseUrl("https://newsdata.io/api/1/")
+                .baseUrl(resources.getString(R.string.news_source))
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build()
@@ -107,7 +105,7 @@ class MainActivity : AppCompatActivity() {
                 val newItem = editText.text.toString()
                 //не добавляем пустую строку
                 if (newItem != "") {
-                    //currentJob?.cancel()
+                    currentJob?.cancel()
                     currentJob = CoroutineScope(Dispatchers.Main).launch {
                         //очистить массивы перед новым добавлением
                         newsImages.clear()
@@ -125,7 +123,7 @@ class MainActivity : AppCompatActivity() {
     private suspend fun sendRequest(request: String){
         try {
             val news = withContext(Dispatchers.IO){
-                newsApiService.getNews("pub_35234445641e29ee8b0f18ff7d1fe8971761a", request.toString())
+                newsApiService.getNews(resources.getString(R.string.apikey), request)
             }
 
             Log.i("MainActivity", "Status = ${news.status}")
@@ -133,13 +131,13 @@ class MainActivity : AppCompatActivity() {
                 Log.i("MainActivity", "Result = ${article.title}")
 
                 newsImages.add(article.image_url)
-                newsAdapter?.notifyItemInserted(newsImages.size - 1);
+                newsAdapter?.notifyItemInserted(newsImages.size - 1)
                 newsTitles.add(article.title)
-                newsAdapter?.notifyItemInserted(newsTitles.size - 1);
+                newsAdapter?.notifyItemInserted(newsTitles.size - 1)
                 newsDescriptions.add(article.description)
-                newsAdapter?.notifyItemInserted(newsDescriptions.size - 1);
+                newsAdapter?.notifyItemInserted(newsDescriptions.size - 1)
                 newsLinks.add(article.link)
-                newsAdapter?.notifyItemInserted(newsLinks.size - 1);
+                newsAdapter?.notifyItemInserted(newsLinks.size - 1)
 
             }
 

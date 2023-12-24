@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Find news</string>
     <string name="news_source">https://newsdata.io/api/1/</string>
-    <string name="news_source_key">news?apikey=pub_35234445641e29ee8b0f18ff7d1fe8971761a&amp;q=</string>
+    <string name="apikey">pub_35234445641e29ee8b0f18ff7d1fe8971761a</string>
 </resources>
