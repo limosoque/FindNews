@@ -1,6 +1,5 @@
 package com.example.findnews
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,22 +16,13 @@ class NewsAdapter(private val newsImages: List<URL>,
                     ) :
     RecyclerView.Adapter<NewsViewHolder>() {
     private var itemClickListener: OnItemClickListener? = null
-    private var itemLongClickListener: OnItemLongClickListener? = null
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
     }
 
-    interface OnItemLongClickListener {
-        fun onItemLongClick(position: Int): Boolean
-    }
-
     fun setOnItemClickListener(listener: OnItemClickListener?) {
         itemClickListener = listener
-    }
-
-    fun setOnItemLongClickListener(listener: OnItemLongClickListener?) {
-        itemLongClickListener = listener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
@@ -43,30 +33,19 @@ class NewsAdapter(private val newsImages: List<URL>,
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-/*        val data = newsList[position]
-        //Обновление данных recyclerView
-        holder.newsItem.text = data*/
-
         holder.newsTitle.text = newsTitles[position]
         holder.newsDescription.text = newsDescriptions[position]
 
+        //Прорисовка картинки
         Glide.with(holder.newsImage)
             .load(newsImages[position])
             .into(holder.newsImage)
-
 
         // бинд обработчика клика на элемент
         holder.itemView.setOnClickListener {
             if (itemClickListener != null) {
                 itemClickListener!!.onItemClick(holder.adapterPosition)
             }
-        }
-        // бинд обработчика долгого клика на элемент
-        holder.itemView.setOnLongClickListener {
-            if (itemLongClickListener != null) {
-                return@setOnLongClickListener itemLongClickListener!!.onItemLongClick(holder.adapterPosition)
-            }
-            false
         }
     }
 
