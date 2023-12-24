@@ -1,12 +1,14 @@
 package com.example.findnews
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import java.net.URL
 
 import com.bumptech.glide.Glide
+
+import java.net.URL
 
 
 class NewsAdapter(private val newsImages: List<URL>,
@@ -51,6 +53,7 @@ class NewsAdapter(private val newsImages: List<URL>,
         Glide.with(holder.newsImage)
             .load(newsImages[position])
             .into(holder.newsImage)
+
 
         // бинд обработчика клика на элемент
         holder.itemView.setOnClickListener {

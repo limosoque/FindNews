@@ -1,5 +1,6 @@
 package com.example.findnews
 
+import android.net.Uri
 import android.os.Bundle;
 import android.util.Log
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.findnews.api.NewsApiJSON
@@ -161,7 +163,7 @@ class MainActivity : AppCompatActivity() {
             for(article in news.results){
                 Log.i("MainActivity", "Result = ${article.title}")
 
-                newsImages.add(article.imageURL)
+                newsImages.add(article.image_url) //TODO: больше не URL
                 newsAdapter?.notifyItemInserted(newsImages.size - 1);
                 newsTitles.add(article.title)
                 newsAdapter?.notifyItemInserted(newsTitles.size - 1);
